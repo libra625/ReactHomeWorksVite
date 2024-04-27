@@ -1,8 +1,15 @@
-# React + Vite
+# ДЗ 86. React Работа с коллекциями
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Необходимо создать компонент Definitions.jsx который:
 
-Currently, two official plugins are available:
+1. Будет возвращать следующую структуру — task3.html
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. всі компоненти повинні бути класові
+
+3. Компонент принимает данные через пропс — данные лежат тут
+
+4. Необходимо принять их в компоненте и отрендерить
+
+5. Подключить компонент Definitions в App.js и отрендерить его
+
+- P.S Не забывайте про пропс key
