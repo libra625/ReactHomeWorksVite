@@ -7,8 +7,8 @@ class Card extends React.Component {
         return (
             <div className="card">
                 <div className="card-body">
-                    {title ? <h4 className="card-title">{title}</h4> : ''}
-                    {text ? <p className="card-title">{text}</p>: ''}
+                    {title ? <h4 className="card-title">{title}</h4> : null}
+                    {text ? <p className="card-title">{text}</p>: null}
                 </div>
             </div>
         )
