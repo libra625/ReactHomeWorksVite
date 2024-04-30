@@ -1,5 +1,11 @@
+import BtnGroup from "./components/BtnGroup.jsx";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <BtnGroup />
+    </>
+  );
 }
 
 export default App;
