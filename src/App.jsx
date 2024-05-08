@@ -1,5 +1,11 @@
+import MyForm from "./components/MyForm/MyForm.jsx";
+
 function App() {
-    return <></>;
+    return (
+        <>
+            <MyForm />
+        </>
+    );
 }
 
 export default App;
