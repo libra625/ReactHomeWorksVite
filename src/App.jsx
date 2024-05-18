@@ -1,5 +1,11 @@
+import MarkdownEditor from "./components/MarkdownEditor";
+
 function App() {
-    return <></>;
+    return (
+        <>
+            <MarkdownEditor onContentChange={console.log} />
+        </>
+    );
 }
 
 export default App;
