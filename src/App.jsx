@@ -1,5 +1,7 @@
+import { PostCatalog } from "./components/PostCatalog";
+
 function App() {
-    return <></>;
+    return <PostCatalog />;
 }
 
 export default App;
