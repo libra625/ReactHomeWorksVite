@@ -1,8 +1,8 @@
-# React + Vite
+# ДЗ 99. Modal.jsx
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Реализуйте компонент <Modal> (Модальное окно)
 
-Currently, two official plugins are available:
+В открытом состоянии строчка: <div class="modal" style="display: none;"> заменяется
+на <div class="modal fade show" style="display: block;">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+открытого модального окна две кнопки закрывающие его: крестик справа вверху и кнопка Cancel справа внизу.

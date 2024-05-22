@@ -1,5 +1,11 @@
+import Component from "./components/Component/index.js";
+
 function App() {
-    return <></>;
+    return (
+        <>
+            <Component />
+        </>
+    );
 }
 
 export default App;
