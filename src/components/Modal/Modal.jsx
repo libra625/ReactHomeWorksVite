@@ -15,7 +15,10 @@ export default class Modal extends Component {
     }
 
     render() {
-        const modalClass = classNames("modal", this.props.isOpen ? "fade" : "");
+        const modalClass = classNames(
+            "modal",
+            this.props.isOpen ? "fade show" : "",
+        );
 
         const modalBlockStyle = classNames(this.props.isOpen ? "block" : "none");
 

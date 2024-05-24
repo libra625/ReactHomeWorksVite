@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 
 const Header = (props) => {
-    const handleClick = () => props.toggle();
+    const handleClick = function () {
+        props.toggle();
+    };
 
     return (
         <div className="modal-header">
