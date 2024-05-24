@@ -1,5 +1,11 @@
+import TodoBox from "./TodoBox/";
+
 function App() {
-    return <></>;
+    return (
+        <>
+            <TodoBox />
+        </>
+    );
 }
 
 export default App;
