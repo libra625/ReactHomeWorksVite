@@ -13,8 +13,6 @@ class TodoBox extends Component {
     }
 
     handleDelete = (indexToDelete) => () => {
-        console.log(this.state);
-        console.log(indexToDelete);
         this.setState((prevState) => ({
             notes: prevState.notes.filter((item, index) => index !== indexToDelete),
         }));
