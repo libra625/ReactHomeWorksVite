@@ -1,69 +1,56 @@
-import { Component } from "react";
-import { cloneDeep } from "lodash";
 import { Button, Form } from "react-bootstrap";
 import Item from "../Item/index.js";
+import { useState } from "react";
 
-class TodoBox extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: "",
-            notes: [],
-        };
-    }
+const TodoBox = () => {
+    const [taskValue, setTaskValue] = useState("");
+    const [tasks, setTasks] = useState([]);
 
-    handleDelete = (indexToDelete) => () => {
-        this.setState((prevState) => ({
-            notes: prevState.notes.filter((item, index) => index !== indexToDelete),
-        }));
+    const handleDelete = (indexToDelete) => () => {
+        const updatedTasks = tasks.filter((task, index) => index !== indexToDelete);
+        setTasks(updatedTasks);
     };
 
-    handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        const prevState = cloneDeep(this.state);
+        if (!taskValue.trim()) return;
 
-        if (!this.state.value.trim()) return;
-
-        this.setState({
-            value: "",
-            notes: [prevState.value, ...prevState.notes],
-        });
+        setTasks([taskValue, ...tasks]);
+        setTaskValue("");
     };
 
-    handleChange = (event) => {
-        this.setState({ value: event.target.value });
+    const handleChange = (event) => {
+        setTaskValue(event.target.value);
     };
 
-    render() {
-        return (
-            <>
-                <div className="mb-3">
-                    <Form className="d-flex" onSubmit={this.handleSubmit}>
-                        <div className="mb-3">
-                            <Form.Control
-                                type="text"
-                                value={this.state.value}
-                                placeholder="I am going..."
-                                className="form-control"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <Button variant="primary" type="submit">
-              Add
-                        </Button>
-                    </Form>
-                </div>
-                {this.state.notes.map((note, index) => (
-                    <Item
-                        key={index}
-                        task={note.toString()}
-                        id={index}
-                        onRemove={this.handleDelete(index)}
-                    />
-                ))}
-            </>
-        );
-    }
-}
+    return (
+        <>
+            <div className="mb-3">
+                <Form className="d-flex" onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <Form.Control
+                            type="text"
+                            value={taskValue}
+                            placeholder="I am going..."
+                            className="form-control"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <Button variant="primary" type="submit">
+            Add
+                    </Button>
+                </Form>
+            </div>
+            {tasks.map((note, index) => (
+                <Item
+                    key={index}
+                    task={note.toString()}
+                    id={index}
+                    onRemove={handleDelete(index)}
+                />
+            ))}
+        </>
+    );
+};
 
 export default TodoBox;
