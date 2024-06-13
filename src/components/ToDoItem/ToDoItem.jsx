@@ -47,7 +47,7 @@ const ToDoItem = ({ title, description, id, deleteFunction }) => {
                 <input
                     type="checkbox"
                     className="form-check-input"
-                    onClick={handleCheck}
+                    onChange={handleCheck}
                     id={id}
                     checked={isDone}
                 />
