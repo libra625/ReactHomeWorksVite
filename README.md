@@ -1,8 +1,16 @@
-# React + Vite
+# ДЗ 106. TodoList
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Так как мы будем плотно работать с TodoList и у вас уже набита на нем рука, мы на нем и продолжим изучение реаккт.
 
-Currently, two official plugins are available:
+Ваша задача, реализовать такой-же TodoList который вы увидите по ссылке.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Важно! Функционал должен быть идентичным тому как он работает по ссылку выше.
+
+Реализовывать на React + react-router, также можете переделать некоторые элементы на react-bootstrap
+
+ДЗ должно быть выполнено с использование функциональных компонентов.
+
+Доп. задача:
+
+Каждый todoItem должен иметь возможность открываться на новой страницы под своим уникальным роутом.
+Роут: todo-items/:id
