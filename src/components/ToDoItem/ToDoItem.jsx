@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getTodos, setTodos } from "../utilities/TodosGetSet/index.js";
 import { Button, Card, Container } from "react-bootstrap";
 import PropTypes from "prop-types";
@@ -8,12 +8,22 @@ const DATA_KEY = "ToDoListReactAndRoutes";
 const ToDoItem = ({ title, description, id, deleteFunction }) => {
     const [isDone, setIsDone] = useState(false);
 
+    useEffect(() => {
+        const notes = getTodos(DATA_KEY);
+        notes.map((note) => {
+            if (note.id.toString() === id.toString()) setIsDone(note.completed);
+
+            return note;
+        });
+    });
+
     const handleCheck = (event) => {
         const targetId = event.target.id;
         const notes = getTodos(DATA_KEY);
 
         const updatedNotes = notes.map((note) => {
-            if (note.id === targetId) return { ...note, completed: !isDone };
+            if (note.id.toString() === targetId)
+                return { ...note, completed: !isDone };
 
             return note;
         });
@@ -36,9 +46,10 @@ const ToDoItem = ({ title, description, id, deleteFunction }) => {
             <Container className="d-flex justify-content-between gap-3">
                 <input
                     type="checkbox"
-                    className="form-check-input btn-check"
+                    className="form-check-input"
                     onClick={handleCheck}
                     id={id}
+                    checked={isDone}
                 />
 
                 <label htmlFor={id} className="completed form-check">

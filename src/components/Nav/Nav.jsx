@@ -11,7 +11,6 @@ const Nav = () => {
     useEffect(() => {
         const fetchTodos = () => {
             setTodos(getTodos(DATA_KEY));
-            console.log(1);
         };
 
         const intervalId = setInterval(() => {
