@@ -17,7 +17,7 @@ const ToDoForm = ({ handleCreate, handleDelete }) => {
         const todos = getTodos(DATA_KEY);
         if (!isEmpty(todos)) {
             const currentID = todos.at(-1).id;
-            setIteration(currentID);
+            setIteration(idGenerator(currentID));
         }
     }, []);
 

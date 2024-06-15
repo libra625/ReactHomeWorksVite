@@ -34,7 +34,7 @@ const Nav = () => {
             Task : {todo.title}
                     </Link>
                 ))}
-                <Link className="nav-links" to="*" element={NotFoundPage} />
+                <Link className="nav-links" to="*" element={<NotFoundPage />} />
             </nav>
         </>
     );
