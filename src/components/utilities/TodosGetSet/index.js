@@ -1,3 +1,3 @@
-import { getTodos, setTodos } from "./NotesGetSet.jsx";
+import { clearLocalStorage, getTodos, setTodos } from "./NotesGetSet.jsx";
 
-export { getTodos, setTodos };
+export { getTodos, setTodos, clearLocalStorage };

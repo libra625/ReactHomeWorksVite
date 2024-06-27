@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { getTodos, setTodos } from "../utilities/TodosGetSet/index.js";
-import { Container } from "react-bootstrap";
 import ToDoItem from "../ToDoItem/index.js";
 import { isEmpty } from "lodash";
 import ToDoForm from "../ToDoForm/index.js";
-
-const DATA_KEY = "ToDoListReactAndRoutes";
+import { Container } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2";
 
 const ToDoList = () => {
     const [todosList, setTodosList] = useState([]);
 
     useEffect(() => {
-        const todos = getTodos(DATA_KEY);
+        const todos = getTodos();
 
         if (!isEmpty(todos)) {
             setTodosList([...todos].reverse());
@@ -19,42 +18,47 @@ const ToDoList = () => {
     }, []);
 
     const handleDelete = (id) => () => {
-        const oldTodos = getTodos(DATA_KEY);
+        const oldTodos = getTodos();
         const filteredTodos = oldTodos.filter((todo) => todo.id !== id);
 
-        setTodos(DATA_KEY, filteredTodos);
+        setTodos(filteredTodos);
         setTodosList([...filteredTodos].reverse());
     };
 
     const handleDeleteAll = () => {
         localStorage.clear();
-        setTodos(DATA_KEY, []);
+        setTodos([]);
         setTodosList([]);
     };
 
     const handleCreate = (newTodo) => {
-        const oldTodos = getTodos(DATA_KEY);
+        const oldTodos = getTodos();
         const updatedTodos = oldTodos ? [...oldTodos, newTodo] : [newTodo];
-        setTodos(DATA_KEY, updatedTodos);
+        setTodos(updatedTodos);
         setTodosList([...updatedTodos].reverse());
     };
 
     return (
-        <Container className="d-flex">
-            <Container className="w-50">
-                <ToDoForm handleCreate={handleCreate} handleDelete={handleDeleteAll} />
-            </Container>
-            <Container className="d-flex flex-wrap col-8 justify-content-evenly">
-                {todosList.map((todo, index) => (
-                    <ToDoItem
-                        key={index}
-                        title={todo.title}
-                        description={todo.description}
-                        id={todo.id}
-                        deleteFunction={handleDelete(todo.id)}
+        <Container disableGutters={true} maxWidth="xxl">
+            <Grid2 container spacing={2}>
+                <Grid2 lg={4}>
+                    <ToDoForm
+                        handleCreate={handleCreate}
+                        handleDelete={handleDeleteAll}
                     />
-                ))}
-            </Container>
+                </Grid2>
+                <Grid2 xs={8}>
+                    {todosList.map((todo, index) => (
+                        <ToDoItem
+                            key={index}
+                            title={todo.title}
+                            description={todo.description}
+                            id={todo.id}
+                            deleteFunction={handleDelete(todo.id)}
+                        />
+                    ))}
+                </Grid2>
+            </Grid2>
         </Container>
     );
 };

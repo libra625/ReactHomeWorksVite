@@ -1,10 +1,11 @@
-import HomePage from "./HomePage/index.js";
-import SingleTodo from "./SingleTodo/index.js";
-import NotFoundPage from "./NotFoundPage/index.js";
+import HomePage from "../pages/HomePage/index.js";
+import SingleTodo from "../pages/SingleTodo/index.js";
+import NotFoundPage from "../pages/NotFoundPage/index.js";
 import routeNames from "./routeNames.js";
+import LoginPage from "../pages/LoginPage/LoginPage.jsx";
 
 const routeConfig = () => {
-    const pageComponents = [HomePage, SingleTodo, NotFoundPage];
+    const pageComponents = [HomePage, SingleTodo, LoginPage, NotFoundPage];
     const keys = Object.keys(routeNames);
 
     const routeConfig = pageComponents.map((pageComponent, index) => {

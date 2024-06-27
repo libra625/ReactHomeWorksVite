@@ -1,6 +1,7 @@
 const routeNames = {
     homePage: "/",
     singleTodo: "todos/:todoId",
+    loginPage: "/login",
     notFound: "*",
 };
 

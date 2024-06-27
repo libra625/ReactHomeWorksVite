@@ -5,8 +5,6 @@ import { isEmpty } from "lodash";
 import { Button, Form, FormGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-const DATA_KEY = "ToDoListReactAndRoutes";
-
 const ToDoForm = ({ handleCreate, handleDelete }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -14,7 +12,7 @@ const ToDoForm = ({ handleCreate, handleDelete }) => {
     // console.log(typeof iteration.next);
 
     useEffect(() => {
-        const todos = getTodos(DATA_KEY);
+        const todos = getTodos();
         if (!isEmpty(todos)) {
             const currentID = todos.at(-1).id;
             setIteration(idGenerator(currentID));

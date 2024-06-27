@@ -3,13 +3,11 @@ import { getTodos, setTodos } from "../utilities/TodosGetSet/index.js";
 import { Button, Card, Container } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-const DATA_KEY = "ToDoListReactAndRoutes";
-
 const ToDoItem = ({ title, description, id, deleteFunction }) => {
     const [isDone, setIsDone] = useState(false);
 
     useEffect(() => {
-        const notes = getTodos(DATA_KEY);
+        const notes = getTodos();
         notes.map((note) => {
             if (note.id.toString() === id.toString()) setIsDone(note.completed);
 
@@ -19,7 +17,7 @@ const ToDoItem = ({ title, description, id, deleteFunction }) => {
 
     const handleCheck = (event) => {
         const targetId = event.target.id;
-        const notes = getTodos(DATA_KEY);
+        const notes = getTodos();
 
         const updatedNotes = notes.map((note) => {
             if (note.id.toString() === targetId)
@@ -27,7 +25,7 @@ const ToDoItem = ({ title, description, id, deleteFunction }) => {
 
             return note;
         });
-        setTodos(DATA_KEY, updatedNotes);
+        setTodos(updatedNotes);
         setIsDone(!isDone);
     };
 

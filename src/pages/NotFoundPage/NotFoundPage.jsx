@@ -1,8 +1,10 @@
+import BaseTemplate from "../../templates/BaseTemplate/index.js";
+
 const NotFoundPage = () => {
     return (
-        <main className="not-found-page">
+        <BaseTemplate>
             <h1>404 Page wasn't found, Stop playing</h1>
-        </main>
+        </BaseTemplate>
     );
 };
 

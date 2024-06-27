@@ -3,14 +3,12 @@ import { getTodos } from "../utilities/TodosGetSet/index.js";
 import { Link } from "react-router-dom";
 import NotFoundPage from "../../pages/NotFoundPage/index.js";
 
-const DATA_KEY = "ToDoListReactAndRoutes";
-
 const Nav = () => {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
         const fetchTodos = () => {
-            setTodos(getTodos(DATA_KEY));
+            setTodos(getTodos());
         };
 
         const intervalId = setInterval(() => {
