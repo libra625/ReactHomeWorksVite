@@ -28,8 +28,9 @@ const LoginForm = () => {
 
     const formik = useFormik({
         initialValues: { ...formInitialValues },
-        validationSchema: validationSchema,
+        validationSchema,
         onSubmit: (values, { resetForm }) => {
+            console.log("dsadsasda");
             Cookies.set("loggedin", "true");
             resetForm();
             redirect(homePage);
@@ -76,7 +77,6 @@ const LoginForm = () => {
                             {showPassword ? <LockIcon /> : <LockOpenIcon />}
                         </Fab>
                     </div>
-
                     <CustomButton
                         color={"primary"}
                         variant={"contained"}

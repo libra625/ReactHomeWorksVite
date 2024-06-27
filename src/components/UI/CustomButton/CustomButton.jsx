@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 const CustomButton = ({ onClick, type, color, variant, id, text, icon }) => {
     const handleClick = (event) => {
-        event.preventDefault();
         if (onClick) {
             onClick(event.target.id);
         }
