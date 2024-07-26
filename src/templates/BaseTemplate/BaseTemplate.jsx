@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import styles from "./BaseTemplateHeader.module.scss";
 
 const BaseTemplate = ({ classname = null, children }) => {
     return <main className={classname}>{children}</main>;
@@ -9,12 +10,11 @@ BaseTemplate.propTypes = {
     children: PropTypes.any.isRequired,
 };
 
-const Header = ({ classname, children }) => {
-    return <header className={classname}>{children}</header>;
+const Header = ({ children }) => {
+    return <header className={styles.header}>{children}</header>;
 };
 
 Header.propTypes = {
-    classname: PropTypes.string,
     children: PropTypes.any.isRequired,
 };
 

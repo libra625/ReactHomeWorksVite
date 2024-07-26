@@ -1,8 +1,10 @@
 const routeNames = {
     homePage: "/",
-    singleTodo: "todos/:todoId",
+    notFoundPage: "*",
     loginPage: "/login",
-    notFound: "*",
+    singleTodo: "todos/:todoId",
+    todoList: "todos",
+    viewTodoPage: "viewTodoPage/:todoId",
 };
 
 Object.freeze(routeNames);

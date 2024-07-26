@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 200px;
+  flex-basis: 50%;
+  flex-grow: 1;
+  background-color: rgb(215, 221, 243);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0.2px 0.2px 10px rgba(0, 0, 0, 0.24);
+
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 300px;
+  flex-grow: 1;
+}
+
+.boldTitle {
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.separator {
+  background-color: transparent;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}

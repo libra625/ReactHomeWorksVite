@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  width: 100%;
+  box-shadow: 0.2px 0.2px 30px rgba(0, 0, 0, 0.42);
+  border-radius: 20px;
+  gap: 30px;
+  height: auto;
+}
+
+.separatorHor {
+  width: 100%;
+  height: 2px;
+  border: unset;
+}
+
+.separatorVert {
+  margin: 0 10px 0 0;
+}
+
+.checkBoxGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.description {
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 90px;
+  min-height: 50px;
+  max-width: 1340px;
+  font-size: 18px;
+  background-color: rgb(207, 206, 248);
+}

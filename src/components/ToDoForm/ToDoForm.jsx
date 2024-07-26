@@ -1,96 +1,95 @@
 import { useEffect, useState } from "react";
-import { idGenerator } from "../utilities/IdGenerator/index.js";
-import { getTodos } from "../utilities/TodosGetSet/index.js";
-import { isEmpty } from "lodash";
-import { Button, Form, FormGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
+import uuid4 from "uuid4";
+import { useFormik } from "formik";
+import toDoFormValidationSchema from "./ToDoFormValidationSchema.js";
+import styles from "./todoForm.module.scss";
+import CustomInput from "../UI/CustomInput/index.js";
+import { FormGroup } from "@mui/material";
+import CustomButton from "../UI/CustomButton/index.js";
+
+const formInitialValues = {
+    title: "",
+    description: "",
+};
 
 const ToDoForm = ({ handleCreate, handleDelete }) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [iteration, setIteration] = useState(idGenerator(0));
-    // console.log(typeof iteration.next);
+    const [currentId, setCurrentId] = useState(uuid4());
 
     useEffect(() => {
-        const todos = getTodos();
-        if (!isEmpty(todos)) {
-            const currentID = todos.at(-1).id;
-            setIteration(idGenerator(currentID));
-        }
-    }, []);
+        setCurrentId(uuid4());
+    }, [handleCreate]);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        name === "title" ? setTitle(value) : setDescription(value);
-    };
+    const formik = useFormik({
+        initialValues: { ...formInitialValues },
+        validationSchema: toDoFormValidationSchema,
+        onSubmit: (values, { resetForm }) => {
+            const newTodo = {
+                title: values.title,
+                description: values.description,
+                itemId: currentId,
+                status: "Not-Completed",
+            };
+            handleCreate(newTodo, "success");
+            resetForm();
+        },
+    });
 
     const handleClearing = () => {
-        setTitle("");
-        setDescription("");
+        formik.resetForm();
     };
 
-    const handleDeleteAll = (event) => {
+    const handleDeleteAll = () => {
         handleDelete();
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (title.trim() === "" || description.trim() === "") return;
-        console.log(iteration);
-        const newId = iteration.next().value;
-        const newTodo = {
-            title,
-            description,
-            id: newId,
-            completed: false,
-        };
-
-        handleCreate(newTodo);
-
-        handleClearing();
-    };
-
     return (
-        <Form onSubmit={handleSubmit}>
-            <FormGroup>
-                <Form.Label>Task title</Form.Label>
-                <Form.Control
-                    placeholder="Title"
-                    value={title}
-                    onChange={handleChange}
+        <form onSubmit={formik.handleSubmit}>
+            <div className={styles.wrapper}>
+                <CustomInput
+                    onChange={formik.handleChange}
+                    value={formik.values.title}
+                    label="Title"
                     name="title"
+                    id="title"
+                    type="text"
                 />
 
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                    as="textarea"
-                    placeholder="Description"
-                    style={{ height: "200px" }}
-                    value={description}
-                    onChange={handleChange}
-                    name="description"
-                />
-                <div className="d-flex justify-content-lg-between flex-wrap p-1 gap-2">
-                    <div className="d-flex gap-2 flex-grow-0">
-                        <Button
-                            className="btn btn-primary w-50"
-                            type="submit"
-                            name="submit_button"
-                        >
-              Create Task
-                        </Button>
+                <FormGroup>
+                    <textarea
+                        id={"description"}
+                        name={"description"}
+                        value={formik.values.description}
+                        onChange={formik.handleChange}
+                        placeholder={"type todo description"}
+                        className={styles.textArea}
+                    />
+                </FormGroup>
 
-                        <Button className="btn btn-warning w-50" onClick={handleClearing}>
-              Clear
-                        </Button>
+                <div className={styles.buttonWrapper}>
+                    <CustomButton
+                        color="primary"
+                        variant="outlined"
+                        type="submit"
+                        text="CREATE"
+                    />
 
-                        <Button className="btn btn-danger w-50" onClick={handleDeleteAll}>
-              Delete all tasks
-                        </Button>
-                    </div>
+                    <CustomButton
+                        color="secondary"
+                        variant="outlined"
+                        onClick={handleClearing}
+                        text="Clear"
+                    />
+
+                    <CustomButton
+                        color="error"
+                        variant="outlined"
+                        onClick={handleDeleteAll}
+                        text="DELEAT ALL"
+                    />
                 </div>
-            </FormGroup>
-        </Form>
+            </div>
+        </form>
     );
 };
 

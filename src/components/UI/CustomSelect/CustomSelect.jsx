@@ -12,7 +12,7 @@ const CustomSelect = ({ status, onSelect, id, view }) => {
                 label={"status"}
                 onChange={onSelect}
             >
-                <MenuItem value={"Not-Completed"}>In process</MenuItem>
+                <MenuItem value={"Not-Completed"}>Not-Completed</MenuItem>
                 <MenuItem value={"Pending"}>Pending</MenuItem>
                 <MenuItem value={"Complete"}>Complete</MenuItem>
             </Select>
@@ -21,7 +21,7 @@ const CustomSelect = ({ status, onSelect, id, view }) => {
 };
 
 CustomSelect.propTypes = {
-    status: PropTypes.string.isRequired,
+    status: PropTypes.string,
     id: PropTypes.any.isRequired,
     view: PropTypes.any,
     onSelect: PropTypes.func,

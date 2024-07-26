@@ -1,71 +1,100 @@
 import { useEffect, useState } from "react";
 import { getTodos, setTodos } from "../utilities/TodosGetSet/index.js";
-import { Button, Card, Container } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { cloneDeep } from "lodash";
+import { useNavigate } from "react-router-dom";
+import styles from "./toDoItem.module.scss";
+import { Typography } from "@mui/material";
+import CustomSelect from "../UI/CustomSelect/index.js";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import CustomButton from "../UI/CustomButton/index.js";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
-const ToDoItem = ({ title, description, id, deleteFunction }) => {
-    const [isDone, setIsDone] = useState(false);
+const ToDoItem = ({ title, description, id, deleteFunction, view }) => {
+    const redirect = useNavigate();
+
+    const todos = getTodos();
+    const [currentTodos, setCurrentTodos] = useState(
+        todos.find((todo) => todo.itemId.toString() === id.toString()) || {},
+    );
+    const [status, setStatus] = useState(currentTodos.status || "Not-Completed");
 
     useEffect(() => {
-        const notes = getTodos();
-        notes.map((note) => {
-            if (note.id.toString() === id.toString()) setIsDone(note.completed);
-
-            return note;
-        });
+        const initialTodos = cloneDeep(currentTodos);
+        setCurrentTodos(initialTodos);
     });
 
-    const handleCheck = (event) => {
-        const targetId = event.target.id;
-        const notes = getTodos();
+    const handleSelect = (event) => {
+        const newStatus = event.target.value;
+        const updatedTodos = getTodos().map((todo) =>
+            todo.itemId.toString() === id.toString()
+                ? {
+                    ...todo,
+                    status: newStatus,
+                }
+                : todo,
+        );
 
-        const updatedNotes = notes.map((note) => {
-            if (note.id.toString() === targetId)
-                return { ...note, completed: !isDone };
-
-            return note;
-        });
-        setTodos(updatedNotes);
-        setIsDone(!isDone);
+        setTodos(updatedTodos);
+        setStatus(newStatus);
     };
 
-    const handleDelete = (event) => {
-        deleteFunction(event.target.id);
+    const handleClick = () => {
+        redirect(view ? `/todosView/${id}` : `/todos/${id}`, {});
+    };
+
+    const handleDelete = () => {
+        deleteFunction();
     };
 
     return (
-        <Card
-            className="mx-1 mb-5"
-            style={{ width: "15rem", background: "lightgrey" }}
-        >
-            <Card.Title>{isDone ? <s>{title}</s> : title}</Card.Title>
-            <Card.Body>{isDone ? <s>{description}</s> : description}</Card.Body>
-            <hr />
-            <Container className="d-flex justify-content-between gap-3">
-                <input
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={handleCheck}
-                    id={id}
-                    checked={isDone}
+        <div className={styles.wrapper}>
+            <div className={styles.container}>
+                <Typography variant="h6">
+                    <p className={styles.boldTitle}>{title}</p>
+                </Typography>
+                <hr className={styles.separator} />
+
+                <Typography variant="body1">{description}</Typography>
+                <hr className={styles.separator} />
+
+                <CustomSelect
+                    view={view}
+                    status={status}
+                    onSelect={handleSelect}
+                    id={id.toString()}
                 />
 
-                <label htmlFor={id} className="completed form-check">
-          Completed
-                </label>
-                <Button className="btn-danger" onClick={handleDelete} id={id}>
-          DELETE
-                </Button>
-            </Container>
-        </Card>
+                <div className={styles.buttonContainer}>
+                    <CustomButton
+                        color={"secondary"}
+                        variant={"contained"}
+                        onClick={handleClick}
+                        id={id.toString()}
+                        icon={<RemoveRedEyeIcon />}
+                    />
+
+                    {deleteFunction && (
+                        <CustomButton
+                            color="error"
+                            variant={"contained"}
+                            onClick={handleDelete}
+                            id={id.toString()}
+                            icon={<DeleteForeverOutlinedIcon />}
+                        />
+                    )}
+                </div>
+            </div>
+        </div>
     );
 };
 
 ToDoItem.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    deleteFunction: PropTypes.func.isRequired,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    deleteFunction: PropTypes.func,
+    view: PropTypes.bool,
 };
 
 export default ToDoItem;

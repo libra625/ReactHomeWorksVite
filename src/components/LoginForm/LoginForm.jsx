@@ -30,7 +30,6 @@ const LoginForm = () => {
         initialValues: { ...formInitialValues },
         validationSchema,
         onSubmit: (values, { resetForm }) => {
-            console.log("dsadsasda");
             Cookies.set("loggedin", "true");
             resetForm();
             redirect(homePage);
@@ -59,7 +58,7 @@ const LoginForm = () => {
                     <CustomInput
                         onChange={formik.handleChange}
                         name={"password"}
-                        type={showPassword ? "password" : "text"}
+                        type={showPassword ? "text" : "password"}
                         value={formik.values.password.trim()}
                         touched={formik.touched.password}
                         error={formik.errors.password}

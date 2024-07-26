@@ -1,65 +1,69 @@
 import { useEffect, useState } from "react";
-import { getTodos, setTodos } from "../utilities/TodosGetSet/index.js";
-import ToDoItem from "../ToDoItem/index.js";
-import { isEmpty } from "lodash";
+import {
+    clearLocalStorage,
+    getTodos,
+    setTodos,
+} from "../utilities/TodosGetSet/index.js";
 import ToDoForm from "../ToDoForm/index.js";
-import { Container } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Typography } from "@mui/material";
+import { cloneDeep } from "lodash";
+import styles from "./todolist.module.scss";
+import ToDoItem from "../ToDoItem/index.js";
 
 const ToDoList = () => {
-    const [todosList, setTodosList] = useState([]);
+    const todos = getTodos();
+
+    const [todosList, setTodosList] = useState(todos ? [...todos].reverse() : []);
 
     useEffect(() => {
-        const todos = getTodos();
-
-        if (!isEmpty(todos)) {
-            setTodosList([...todos].reverse());
+        if (todos) {
+            const todosCopy = cloneDeep(todos);
+            setTodosList([...todosCopy].reverse());
         }
     }, []);
 
     const handleDelete = (id) => () => {
         const oldTodos = getTodos();
-        const filteredTodos = oldTodos.filter((todo) => todo.id !== id);
+        const filteredTodos = oldTodos.filter((todo) => todo.itemId !== id);
 
         setTodos(filteredTodos);
         setTodosList([...filteredTodos].reverse());
     };
 
     const handleDeleteAll = () => {
-        localStorage.clear();
-        setTodos([]);
+        clearLocalStorage();
         setTodosList([]);
     };
 
     const handleCreate = (newTodo) => {
-        const oldTodos = getTodos();
-        const updatedTodos = oldTodos ? [...oldTodos, newTodo] : [newTodo];
+        const oldTodos = getTodos() || [];
+        const updatedTodos = [...oldTodos, newTodo];
         setTodos(updatedTodos);
         setTodosList([...updatedTodos].reverse());
     };
 
     return (
-        <Container disableGutters={true} maxWidth="xxl">
-            <Grid2 container spacing={2}>
-                <Grid2 lg={4}>
-                    <ToDoForm
-                        handleCreate={handleCreate}
-                        handleDelete={handleDeleteAll}
-                    />
-                </Grid2>
-                <Grid2 xs={8}>
-                    {todosList.map((todo, index) => (
+        <div className={styles.list}>
+            <Typography variant={"h5"} align={"center"}>
+                <b>Create a new todo</b>
+            </Typography>
+
+            <div className={styles.container}>
+                <ToDoForm handleCreate={handleCreate} handleDelete={handleDeleteAll} />
+
+                <div className={styles.wrapper}>
+                    {todosList.map((todo) => (
                         <ToDoItem
-                            key={index}
-                            title={todo.title}
+                            deleteFunction={handleDelete(todo.itemId)}
                             description={todo.description}
-                            id={todo.id}
-                            deleteFunction={handleDelete(todo.id)}
+                            id={todo.itemId}
+                            title={todo.title}
+                            key={todo.itemId}
                         />
                     ))}
-                </Grid2>
-            </Grid2>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };
 

@@ -1,40 +1,19 @@
-import { useEffect, useState } from "react";
-import { getTodos } from "../utilities/TodosGetSet/index.js";
 import { Link } from "react-router-dom";
-import NotFoundPage from "../../pages/NotFoundPage/index.js";
+import BaseTemplate from "../../templates/BaseTemplate/index.js";
+import styles from "./nav.module.scss";
 
 const Nav = () => {
-    const [todos, setTodos] = useState([]);
-
-    useEffect(() => {
-        const fetchTodos = () => {
-            setTodos(getTodos());
-        };
-
-        const intervalId = setInterval(() => {
-            fetchTodos();
-        }, 1000);
-
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, []);
-
     return (
-        <>
-            <nav className="d-flex gap-4 p-3 shadow-lg">
-                <Link className="nav-links" to={"/"}>
-          Home Page
+        <BaseTemplate.Header>
+            <nav className={styles.navigation}>
+                <Link className={styles.link} to="/">
+          HomePage
                 </Link>
-        ||
-                {todos.map((todo, index) => (
-                    <Link className="nav-link" key={index} to={`/todos/${index}`}>
-            Task : {todo.title}
-                    </Link>
-                ))}
-                <Link className="nav-links" to="*" element={<NotFoundPage />} />
+                <Link className={styles.link} to="/todos">
+          Todos
+                </Link>
             </nav>
-        </>
+        </BaseTemplate.Header>
     );
 };
 
